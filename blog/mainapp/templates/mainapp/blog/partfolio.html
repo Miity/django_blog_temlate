@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Un Viaggio Italiano Blog{% endblock %}
+
+{% block content %}
+
+<div class="row mt-5 mb-3">
+    <div class="col-12 my-3 pl-5">
+        {% if view.get_category %}
+            <nav class="nav nav-pills flex-column flex-sm-row navbar-light my-3">
+            <span class="navbar-brand" style="font-family: 'Oswald', sans-serif;">Коллекция: </span>
+            <a href="{% url 'blog' %}" class="flex-sm-fill text-sm-center nav-link
+            {% if request.get_full_path == "/blog/" %} active {% endif %} ">Все посты</a>
+            {% for category in view.get_category %}
+            <a href="{% url 'category' category.slug %}" class="flex-sm-fill text-sm-center nav-link
+            {% if category.slug in request.path %} active {% endif %} ">{{ category.title }}</a>
+            {% endfor %}
+            </nav>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    {% for post in post_list %}
+    <div class="col-3 my-3">
+        {% if post.image %}
+        <div class="col-12">
+            <a href="{% url 'post_detail' post.slug %}">
+                <img src="{{ post.image.url }}" class="img-fluid img-thumbnail ">
+            </a>
+        </div>
+        {% endif %}
+        <div class="col-12 mt-3 mb-2 text-center">
+            <h3 class="h5">{{ post.title }}</h3>
+            <span class="small"><a href="{% url 'category' slug=post.category.slug %}">{{ post.category }}</a></span> |
+            <span class="small">Опубликованно: {{ post.post_date }}</span>
+            <br>
+
+            {% if user.is_authenticated and user.is_superuser %}
+                <span class="small"><a href="{% url 'update_post' slug=post.slug %}">Edit</a></span>
+                | <span class="small"><a href="{% url 'delete_post' slug=post.slug %}">Delete</a></span>
+            {% endif %}
+        </div>
+
+        <div class="col-12 text-center">
+            <a href="{% url 'post_detail' post.slug %}" class="btn btn-sm btn-info"> Подробнее </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}

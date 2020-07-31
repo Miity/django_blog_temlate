@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Un Viaggio Italiano Blog{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 my-3">
+        <h2 class="display-3">Блог</h2>
+        {% if view.get_category %}
+            <nav class="nav nav-pills flex-column flex-sm-row navbar-light my-3">
+            <span class="navbar-brand">Категории: </span>
+            <a href="{% url 'blog' %}" class="flex-sm-fill text-sm-center nav-link
+            {% if request.get_full_path == "/blog/" %} active {% endif %} ">Все посты</a>
+            {% for category in view.get_category %}
+            <a href="{% url 'category' category.slug %}" class="flex-sm-fill text-sm-center nav-link
+            {% if category.slug in request.path %} active {% endif %} ">{{ category.title }}</a>
+            {% endfor %}
+            </nav>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 ">
+    {% for post in post_list %}
+
+    <div class="card mb-3">
+    <div class="card-body"><a href="{% url 'post_detail' post.slug %}"><h3>{{ post.title }}</h3></a>
+        <span class="small"><a href="{% url 'category' slug=post.category.slug %}">{{ post.category }}</a></span> |
+        <span class="small">Опубликованно: {{ post.post_date }}</span>
+
+        {% if user.is_authenticated and user.is_superuser %}
+            | <span class="small"><a href="{% url 'update_post' slug=post.slug %}">Edit</a></span>
+            | <span class="small"><a href="{% url 'delete_post' slug=post.slug %}">Delete</a></span>
+        {% endif %}
+
+    </div>
+    <div class="card-body">
+        {% if post.excert %}
+            {{ post.excert | slice:":200" | safe }}"
+        {% else %}
+            {{ post.content | slice:":200" | safe }}">
+        {% endif %}
+        <a href="{% url 'post_detail' post.slug %}"> ...>>Подробнее </a>
+    </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}

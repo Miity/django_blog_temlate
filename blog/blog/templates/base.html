@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>{% block title %} Local Library {% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+
+    {% load fontawesome_5 %}
+    {% fontawesome_5_static %}
+
+     <!-- Добавление дополнительного статического CSS файла -->
+    {% load static %}
+
+    <link href="{% static 'css/carousel1.css' %} " rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;515&family=Nunito:ital,wght@0,600;1,300;1,800&family=Oswald:wght@400;500&family=Poiret+One&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Fotorama from CDNJS, 19 KB -->
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-2 col-sm-3 sidebar ">
+        <div class="pt-3 text-right">
+            <span style="font-size: 18px;">
+                <a class="fab fa-facebook-square mr-2 icon" href="https://www.facebook.com/unviaggioitaliano/"></a>
+                <a class="fab fa-instagram icon" href="https://www.instagram.com/un_viaggio_italiano/"></a>
+            </span>
+        </div>
+        <nav class="pt-4 nav flex-column " style="font-family: 'Oswald', sans-serif;">
+            <p class="h1 mx-2 mb-2 text-dark logo">Liza Betta</p>
+            <a href="{% url 'index' %}" class="nav-link" >Главная страница</a>
+            <a href="{% url 'blog' %}" class="nav-link">Блог</a>
+            <a href="{% url 'static_page' 'about_us' %}" class="nav-link">О нас</a>
+            <a href="{% url 'static_page' 'contact' %}" class="nav-link">Контакты</a>
+
+            {% for static_page in view.get_static_page %}
+                <a href="{% url 'static_page' static_page.slug %}" class="nav-link">static_page.title</a>
+            {% endfor %}
+
+            <hr>
+
+            {% if user.is_authenticated and user.is_superuser %}
+                <div class="pl-3">Здравствуй {{ user.username }}</div>
+                <a href="http://127.0.0.1:8000/admin/" class="nav-link">Админка</a>
+                <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                <a class="nav-link" href="{% url 'add_post' %}">add new post</a>
+            {% elif user.is_authenticated %}
+                <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'login' %}">Вход</a>
+                <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </nav>
+
+
+
+    </div>
+
+    <div class="col-md-10 col-sm-9 p-0">
+        {% block carousel %}
+        {% endblock %}
+        <div class="container">
+
+            {% block content %}
+            {% endblock %}
+
+            <div class="row">
+                <footer class="col-12 blockquote text-center ">
+                    <hr class="m-5 px-5">
+                    <span style="font-size: 19px; color: Dodgerblue;">
+                    <a class="fas fa-envelope mr-2 icon" href="mailto:uvi.italia@gmail.com"></a>
+                    <a class="fab fa-whatsapp-square mr-2 icon" href="https://wa.me/393898316491"></a>
+                    <a class="fab fa-viber mr-2 icon" href="viber://chat?number=+380673731919"></a>
+                    <a class="fab fa-facebook-messenger icon" href="http://m.me/andreyukanna"></a>
+                    </span>
+                </footer>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</div>
+
+
+{% block extra_js %}{% endblock extra_js %}
+</body>
+</html>

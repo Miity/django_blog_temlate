@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ staticpage.title }}{% endblock %}
+
+{% block content %}
+<div class="col-12 mt-5">
+<h2>{{ staticpage.title }}</h2>
+
+<p class="py-3">{{ staticpage.content|safe }}</p>
+</div>
+{% endblock %}

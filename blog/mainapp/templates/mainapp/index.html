@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block carousel %}
+  <div id="demo" class="carousel slide" data-ride="carousel">
+
+              <!-- Indicators -->
+              <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+              </ul>
+
+              <!-- The slideshow -->
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="{% static 'mainapp/carusel/la.jpg' %}" alt="Los Angeles">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'mainapp/carusel/chicago.jpg' %}" alt="Chicago">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'mainapp/carusel/ny.jpg' %}" alt="New York">
+                </div>
+              </div>
+
+              <!-- Left and right controls -->
+              <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </a>
+
+            </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-12 my-3">
+    <h1 class="mb-5 text-center">Benvenuti в «Италия по-домашнему»!</h1>
+
+    <img src="{% static 'mainapp/logo_uvitalia.png' %}" alt="logo_uvitalia" class="col-md-3 float-sm-left m-3">
+
+    <p>Если вам скучно быть просто туристом и хочется приехать в Италию в гости, чтобы почувствовать ту атмосферу, которую с детства видели в итальянских фильмах, то вы попали по правильному адресу.</p>
+
+    <p class="">Мы создаём индивидуальные путешествия по Улисской Ривьере, которая растянулась между вечным Римом и солнечным Неаполем. Здесь лазурное море и песчаные пляжи, старинные города, крепости, винодельни и всё то, за чем едут отдыхать в Италию. Вас ждут красивая вилла в оливковом саду и завтраки на веранде под пение цикад.</p>
+
+    <p>Наши туры&nbsp;<a href="https://uvitalia.com/avtorskie-toury/v-italiju-v-gosti/">&laquo;В Италию в гости&raquo;</a>&nbsp;и&nbsp;<a href="https://uvitalia.com/category/individualnye-programmy/">&laquo;Три дня Италии&nbsp;для двоих&raquo;</a><a href="https://uvitalia.com/category/avtorskie-toury/tri-dnja-italii/">,</a>&nbsp;созданы для тех, кто хочет увидеть Италию изнутри.</p>
+
+    <p>Тем, кто любит побыть в приятной компании, мы предлагаем&nbsp;<a href="https://uvitalia.com/category/avtorskie-toury/">Авторские туры&nbsp; в Италию для мини-групп</a>.</p>
+
+    <p>А если вы уже в Риме и хотите на денёк сбежать в &laquo;дольче виту&raquo;, то мы ждём вас на наших&nbsp;&laquo;<a href="https://uvitalia.com/category/photo-turi/">Фото-прогулках из Гаэты</a>&raquo;.</p>
+
+    <p>Мы всё продумали так, чтобы вы могли просто наслаждаться отдыхом в Италии &ndash; от встречи в аэропорту до красивого фотоотчёта, который вы увезёте с собой из вашего итальянского путешествия.</p>
+
+    <p>Мы также можем предложить вам проверенные и комфортные варианты аренды вилл и аппартаментов на нашем побережье.</p>
+
+    <p>Ждём вас в &laquo;Италии по-домашнему&raquo;! Анна и Франческо</p>
+
+    <p>Вы можете связаться с нами по любому удобному мессенджеру или оставить заявку здесь</p>
+
+    <p>Наши страницы в соцсетях &mdash; об Италии и жизни здесь:</p>
+</div>
+{% endblock %}
+

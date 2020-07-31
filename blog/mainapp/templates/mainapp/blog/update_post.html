@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Add Blog Post...{% endblock %}
+{% block content %}
+<div class="col my-5">
+<h2>Edit Blog Post...</h2>
+<div class="form-group">
+    <form method="post">
+        <br/><br/>
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button class="btn btn-secondary">Update</button>
+    </form>
+</div>
+</div>
+{% endblock %}
