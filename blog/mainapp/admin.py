@@ -2,22 +2,9 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from import_export import resources
-from import_export.admin import ImportExportModelAdmin
 from .models import Post, Category, StaticPage, Post_Liblery
 
 
-class PostResource(resources.ModelResource):
-    class Meta:
-        model = Post
-        fields = ("id", "title", "category", "status", "post_date")
-        export_order = ("id", "title", "category", "status", "post_date")
-
-
-class BookAdmin(ImportExportModelAdmin):
-    resource_class = PostResource
-
-admin.site.register(Post, BookAdmin)
 
 class PostImageAdmin(admin.StackedInline):
     model = Post_Liblery
@@ -36,9 +23,9 @@ class CategoryAdmin(admin.ModelAdmin):
     inlines = [PostsInCategory]
     save_on_top = True
 
-
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    resource_class = PostResource
+
     list_display = ("id", "title", "category", "status", "post_date", "image")
 
     fieldsets = (

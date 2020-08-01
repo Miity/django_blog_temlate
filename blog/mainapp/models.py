@@ -22,6 +22,7 @@ class Category(models.Model):
 class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=1, )
     post_date = models.DateTimeField("Дата создания", auto_now_add=True)
+    update_at = models.DateTimeField('Даиа обновленния', auto_now=True)
     category = models.ForeignKey(Category,
                                  related_name='category',
                                  null=True,
