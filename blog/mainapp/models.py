@@ -29,6 +29,7 @@ class Post(models.Model):
                                  blank=True,
                                  verbose_name='Категория',
                                  on_delete=models.SET_NULL,
+                                 default='0',
                                  )
     image = models.ImageField("Главное фото", null=True, blank=True, upload_to='images/')
     image_small = ImageSpecField(source='image',
