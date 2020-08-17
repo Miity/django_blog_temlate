@@ -1,13 +1,12 @@
+import json
 from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.conf import settings
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
 from .models import Post, Category, StaticPage, Post_Liblery
 from .form import PostForm
 
-
-
-# Create your views here.
 
 class HomeView(TemplateView):
     template_name = "mainapp/index.html"
@@ -61,7 +60,7 @@ class Post_Detail(DetailView):
         context['photos'] = Post_Liblery.objects.filter(post=post)
         context['next'] = Post.objects.filter(post_date__gt=self.object.post_date).order_by("post_date").first()
         context['prev'] = Post.objects.filter(post_date__lt=self.object.post_date).order_by("-post_date").first()
-
+        context['ckeditor_config'] = json.dumps(settings.CKEDITOR_CONFIGS["default"])
         return context
 
 

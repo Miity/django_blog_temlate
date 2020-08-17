@@ -16,10 +16,8 @@ Including another URLconf
 from django.urls import path
 from .views import Post_List, Post_Detail, Post_by_Cat, AddPostView, UpdatePostView, DeletePostView,\
     HomeView, StaticPageView
-from blog.import_csv import import_csv
 urlpatterns = [
     path('', HomeView.as_view(), name='index'),
-    path('import_csv/', import_csv),
     path('<slug:slug>', StaticPageView.as_view(), name='static_page'),
     path('blog/', Post_List.as_view(), name='blog'),
     path('post/<slug:slug>', Post_Detail.as_view(), name = "post_detail" ),
@@ -27,5 +25,4 @@ urlpatterns = [
     path('add_post/', AddPostView.as_view(), name = 'add_post'),
     path('post/update/<slug:slug>', UpdatePostView.as_view(), name = 'update_post'),
     path('post/delete/<slug:slug>', DeletePostView.as_view(), name = 'delete_post'),
-
 ]

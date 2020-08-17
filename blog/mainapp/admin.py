@@ -31,7 +31,7 @@ class PostAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Параметры', {
             "classes": ("collapse"),
-            "fields": (("author", "category", "status"),)
+            "fields": (("category", "status"),)
         }),
         ("Пост", {
             "fields": (("title",), ("slug",),("image", "content",))

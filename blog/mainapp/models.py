@@ -20,7 +20,6 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=1, )
     post_date = models.DateTimeField("Дата создания", auto_now_add=True)
     update_at = models.DateTimeField('Даиа обновленния', auto_now=True)
     category = models.ForeignKey(Category,
@@ -29,19 +28,19 @@ class Post(models.Model):
                                  blank=True,
                                  verbose_name='Категория',
                                  on_delete=models.SET_NULL,
-                                 default='0',
+                                 default=0,
                                  )
     image = models.ImageField("Главное фото", null=True, blank=True, upload_to='images/')
     image_small = ImageSpecField(source='image',
-                                 processors=[Thumbnail(150, 150)],
+                                 processors=[Thumbnail(400, 400)],
                                  format='JPEG',
                                  options={'quality': 60})
+    title = models.CharField("Название", max_length=200)
     content = RichTextField("Контент", null=True, blank=True)
     excert = models.TextField("Краткое описание", max_length=200, null=True, blank=True)
-    title = models.CharField("Название", max_length=200)
+    slug = models.SlugField(max_length=150, db_index=True, null=True, blank=True, unique=True)
     status = models.BooleanField("Опубликовать?", default=True)
     comment_status = models.BooleanField("Можно комментировать?", default=True)
-    slug = models.SlugField(max_length=150, db_index=True, null=True, blank=True, unique=True)
 
     def __str__(self):
         return self.title

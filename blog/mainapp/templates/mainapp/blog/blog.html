@@ -37,7 +37,7 @@
         {% if post.excert %}
             {{ post.excert | slice:":200" | safe }}"
         {% else %}
-            {{ post.content | slice:":200" | safe }}">
+            {{ post.content | striptags | slice:":200" | safe }}">
         {% endif %}
         <a href="{% url 'post_detail' post.slug %}"> ...>>Подробнее </a>
     </div>

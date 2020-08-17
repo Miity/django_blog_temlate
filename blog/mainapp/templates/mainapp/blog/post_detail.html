@@ -1,17 +1,26 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}{{ post.title }}{% endblock %}
+
+{% block extra_js %}
+    {% if user.is_authenticated and user.is_superuser %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script src=" {% static 'js/admin.js' %}"></script>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col mb-4">
-        <h2 class=" my-5 text-center">{{ post.title }}</h2>
+        <h2 class=" my-5 text-center" id="post-title" data-field-value="{{ post.title }}">{{ post.title }}</h2>
+        <input class="form-control my-5" id="post-title-edit" style="display: none;"></input>
         <div class="text-center">
             <span class="small"><a href="{% url 'category' slug=post.category.slug %}">{{ post.category }}</a></span> |
             <span class="small">Опубликованно: {{ post.post_date }}</span> |
             <span class="small">Автор: {{ post.author }}</span>
             {% if user.is_authenticated and user.is_superuser %}
-                | <span class="small"><a href="{% url 'update_post' slug=post.slug %}">Edit</a></span>
-                | <span class="small"><a href="{% url 'delete_post' slug=post.slug %}">Delete</a></span>
+                | <span class="small"><a href="{% url 'update_post' slug=post.slug %}" id="post-edit">Edit</a></span>
+                | <span class="small"><a href="{% url 'delete_post' slug=post.slug %}" id="post-delete">Delete</a></span>
             {% endif %}
         </div>
     </div>
@@ -19,36 +28,45 @@
 <div class="row">
     <div class="col-md-5" >
         <!-- Add images to <div class="fotorama"></div> -->
-         <div class="fotorama" data-width="100%" data-ratio="3/4" data-nav="thumbs" data-allowfullscreen="true"
+         <div class="fotorama" id="post-fotorama" data-width="100%" data-ratio="3/4" data-nav="thumbs" data-allowfullscreen="true"
               data-transition="crossfade" data-keyboard="true" data-thumbwidth="120" data-thumbheight="120" data-thumbmargin="5">
             {% for p in photos %}
                 <a href="{{ p.image.url }}"><img src="{{ p.image_small.url }}" ></a>
             {% endfor %}
          </div>
     </div>
-    <div class="col-md-7 px-5"><p class="">{{ post.content|safe }}</p></div>
+    <div class="col-md-7 px-5">
+        <div id="post-content">{{ post.content|safe }}</div>
+        <textarea
+            data-processed="0"
+            id="post-content-edit"
+            style="display: none;"
+            data-config="{{ ckeditor_config }}">
+        </textarea>
+    </div>
 </div>
 <hr class="m-5">
 <div class="row my-5">
 
-        <div class="col-2 text-center">
-            {% if prev is not None %}
-                {% if prev.image %}
-                <a href="{{ prev.get_absolute_url }}">
-                    <img src="{{ prev.image.url }}" class="img-fluid img-thumbnail mb-3">
-                </a>
-                {% endif %}
-                <a href="{{ prev.get_absolute_url }}"><h5>{{ prev.title }}</h5></a>
-            {% endif %}
-        </div>
-        <div class="col-2 offset-md-8 text-center">
+
+        <div class="col-6  text-center">
             {% if next is not None %}
                 {% if next.image %}
                 <a href="{{ next.get_absolute_url }}">
-                    <img src="{{ next.image.url }}" class="img-fluid img-thumbnail mb-3">
+                    <img src="{{ next.image.url }}" class="img-fluid img-thumbnail mb-3" style="max-width: 300px;">
                 </a>
                 {% endif %}
                 <a href="{{ next.get_absolute_url }}"><h5>{{ next.title }}</h5></a>
+            {% endif %}
+        </div>
+        <div class="col-6 text-center">
+            {% if prev is not None %}
+                {% if prev.image %}
+                <a href="{{ prev.get_absolute_url }}">
+                    <img src="{{ prev.image.url }}" class="img-fluid img-thumbnail mb-3" style="max-width: 300px;">
+                </a>
+                {% endif %}
+                <a href="{{ prev.get_absolute_url }}"><h5>{{ prev.title }}</h5></a>
             {% endif %}
         </div>
 </div>
